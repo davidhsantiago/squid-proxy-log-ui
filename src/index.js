@@ -9,7 +9,7 @@ const { createWebSocket } = require("./services/websocket.service");
 
 getConfig();
 
-const port = getConfig().PORT || 3000;
+const port = getConfig().port || 3000;
 
 const server = http.createServer((req, res) => {
 	routeRequest(req, res);
@@ -18,5 +18,5 @@ const server = http.createServer((req, res) => {
 createWebSocket(server);
 
 server.listen(port, () => {
-	console.log(`Server listening on http://localhost:${port}`);
+	console.log(`Server listening on http://${getConfig().host}:${port}`);
 });
