@@ -1,0 +1,23 @@
+services:
+  squid-proxy-log-ui:
+    build:
+      context: ../../..
+      dockerfile: install/docker/assets/Dockerfile
+    container_name: squid-proxy-log-ui
+    ports:
+      - "3000:3000"
+      - "3128:3128"
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      IS_DOCKER: true
+      SQUID_HOST: 127.0.0.1
+      SQUID_PORT: 3128
+      SQUID_LOG_DIRS: /var/log/squid
+      SQUID_LOG_FILE: /var/log/squid/access.log
+    volumes:
+      - squid-logs:/var/log/squid
+    restart: unless-stopped
+
+volumes:
+  squid-logs:

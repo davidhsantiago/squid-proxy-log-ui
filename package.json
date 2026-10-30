@@ -20,6 +20,7 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "node --watch src/index.js",
+    "clean:dist": "rm -rf dist",
     "test": "node --test"
   },
   "dependencies": {
