@@ -1,0 +1,16 @@
+[Unit]
+Description=Squid Proxy Log UI
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=root
+Group=root
+WorkingDirectory=/opt/squid-proxy-log-ui
+ExecStart=/opt/squid-proxy-log-ui/startup.sh
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
