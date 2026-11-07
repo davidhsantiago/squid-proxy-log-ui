@@ -20,6 +20,7 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "node --watch src/index.js",
+    "checkRequirements:linux": "sudo bash ./scripts/check-system-requirements.sh",
     "test": "node --test"
   },
   "dependencies": {
