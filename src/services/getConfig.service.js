@@ -5,7 +5,9 @@ require('dotenv').config();
  */
 const getConfig = () => {
     return {
-        isDocker: process.env.IS_DOCKER === 'true',
+        isDocker: process.env.IS_DOCKER || false,
+        port: process.env.PORT || 3000,
+        host: process.env.HOST || '127.0.0.1',
         squidHost: process.env.SQUID_HOST,
         squidPort: process.env.SQUID_PORT,
         squidLogPath: process.env.LOG_PATH,
@@ -13,5 +15,7 @@ const getConfig = () => {
         isDev: process.env.NODE_ENV === 'development'
     };
 };
+
+console.log('Configuration:', getConfig());
 
 module.exports = getConfig;
