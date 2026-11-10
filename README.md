@@ -8,6 +8,7 @@ This project is intended for testing and verifying whether requests are flowing 
 - Docker installation guide: [docs/DOCKER.md](docs/DOCKER.md)
 - Linux installation guide: [docs/LINUX.md](docs/LINUX.md)
 - Development setup: [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md)
+- File structure reference: [docs/FILE-STRUCTURE.md](docs/FILE-STRUCTURE.md)
 
 ## Development mode
 
