@@ -21,6 +21,8 @@
     "start": "node src/index.js",
     "dev": "node --watch src/index.js",
     "clean:dist": "rm -rf dist",
+    "clean:modules": "rm -rf node_modules",
+    "clean": "npm run clean:dist && npm run clean:modules",
     "test": "node --test"
   },
   "dependencies": {

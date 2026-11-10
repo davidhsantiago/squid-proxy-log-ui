@@ -7,9 +7,8 @@ const getConfig = require("./services/getConfig.service");
 const { routeRequest } = require("./routes");
 const { createWebSocket } = require("./services/websocket.service");
 
-getConfig();
+const port = getConfig().httpPort;
 
-const port = getConfig().port || 3000;
 
 const server = http.createServer((req, res) => {
 	routeRequest(req, res);
