@@ -21,7 +21,8 @@
     "start": "node src/index.js",
     "dev": "node --watch src/index.js",
     "clean:dist": "rm -rf dist",
-    "checkRequirements:linux": "sudo bash ./scripts/check-system-requirements.sh",
+    "clean:modules": "rm -rf node_modules",
+    "clean": "npm run clean:dist && npm run clean:modules",
     "test": "node --test"
   },
   "dependencies": {
