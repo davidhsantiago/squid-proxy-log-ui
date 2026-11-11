@@ -3,7 +3,8 @@
 const {
 	listAvailableLogFiles,
 	readLogPage,
-	resolveSquidLogPath
+	resolveSquidLogPath,
+	getLogFile
 } = require("../services/readLogFiles.service");
 
 /**
@@ -100,7 +101,33 @@ function handleLogFilesRoute(_req, res) {
 	}
 }
 
+/**
+ * Handles the /api/log-file route.
+ * @param {http.IncomingMessage} _req
+ * @param {http.ServerResponse} res
+ */
+function handleLogFileDownload(_req, res) {
+	try {
+		const logFileId = url.searchParams.get("file") || undefined;
+		const logPath = resolveSquidLogPath(logFileId);
+		const file = getLogFile(logPath);
+		const body = JSON.stringify(file);
+
+		res.writeHead(200, { "Content-Type": "application/json" });
+		res.end(body);
+
+	} catch (error) {
+		const body = JSON.stringify({
+			message: error.message
+		});
+
+		res.writeHead(500, { "Content-Type": "application/json" });
+		res.end(body);
+	}
+}
+
 module.exports = {
 	handleLogFilesRoute,
-	handleLogsRoute
+	handleLogsRoute,
+	handleLogFileDownload
 };

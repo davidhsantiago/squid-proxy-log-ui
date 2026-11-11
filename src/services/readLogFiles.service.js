@@ -194,6 +194,27 @@ function readLogPage(filePath, page = 1, limit = 100) {
 }
 
 /**
+ * Read a specific page of a log file.
+ * @param {string} filePath - The path to the log file.
+ * @returns {object} An object containing the log lines and file info.
+ */
+function getLogFile(filePath) {
+	if (!fs.existsSync(filePath)) {
+		throw new Error(`File not found: ${filePath}`);
+	}
+
+	const content = fs.readFileSync(filePath, "utf-8");
+	const lines = content.split(/\r?\n/).filter((line) => line.length > 0);
+	const path = filePath.split("/");
+	const name = path[path.length-1];
+
+	return {
+		name: name,
+		data: lines
+	}
+}
+
+/**
  * Tail the last few lines of a log file.
  * @param {string} filePath - The path to the log file.
  * @param {number} lines - The number of lines to tail.
@@ -208,5 +229,6 @@ module.exports = {
 	readLogPage,
 	listAvailableLogFiles,
 	resolveSquidLogPath,
-	tailLogFile
+	tailLogFile,
+	getLogFile
 };
