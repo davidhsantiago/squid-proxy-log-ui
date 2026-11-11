@@ -40,7 +40,7 @@ function routeRequest(req, res) {
 	}
 
 	if (method === "GET" && url.pathname === "/api/log-file") {
-		handleLogFileDownload(req, res);
+		handleLogFileDownload(req, res, url);
 		return;
 	}
 

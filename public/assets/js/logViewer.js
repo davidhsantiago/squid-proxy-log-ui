@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const prevPageButton = document.getElementById("prev-page");
     const nextPageButton = document.getElementById("next-page");
     const refreshButton = document.getElementById("refresh-button");
+    const downloadButton = document.getElementById("download-button");
     const limitSelect = document.getElementById("limit-select");
     const logFileSelect = document.getElementById("log-file-select");
 
@@ -147,6 +148,50 @@ document.addEventListener("DOMContentLoaded", () => {
         nextPageButton.disabled = !paginationState.hasNext;
     }
 
+    async function downloadCurrentFile(lines) {
+        console.log(lines);
+
+        const query = new URLSearchParams({
+            file: String(selectedFileId)
+        });
+
+        const response = await fetch(`/api/log-file?${query.toString()}`);
+        const file = (await response.json()).file;
+
+        const link = document.createElement("a");
+
+        let content;
+
+        if (lines != null) {
+            if (lines > 0) {
+                content = trimLogs({quantity: lines, content: file.data});
+            } else {
+                content = trimLogs({content: file.data});
+            }
+        } else {
+            content = trimLogs({content: file.data});
+        }
+
+        const f = new Blob([content], { type: "text/plain" });
+
+        link.href = URL.createObjectURL(f);
+        link.download = file.name;
+
+        link.click();
+
+        URL.revokeObjectURL(link.href);
+    }
+
+    function trimLogs({quantity, content}) {
+
+        if (quantity) {
+            if (quantity < content.length)
+                content.splice(0, content.length - quantity);
+        }
+
+        return content.join("\n");
+    }
+
     async function loadLogs() {
         viewerStatus.textContent = "Loading logs...";
 
@@ -249,6 +294,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     refreshButton.addEventListener("click", () => {
         loadLogs();
+    });
+
+    downloadButton.addEventListener("click", () => {
+
+        const lines = window.prompt("Please select the number of logs to save.\n(Blank for the whole file)", "all").trim();
+
+        if (lines == "all" || isNaN(lines))
+            downloadCurrentFile();
+        else {
+            if (lines > 0)
+                downloadCurrentFile(lines);
+            else
+                downloadCurrentFile();
+        }
     });
 
     limitSelect.addEventListener("change", () => {

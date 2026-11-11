@@ -105,13 +105,16 @@ function handleLogFilesRoute(_req, res) {
  * Handles the /api/log-file route.
  * @param {http.IncomingMessage} _req
  * @param {http.ServerResponse} res
+ * @param {URL} url
  */
-function handleLogFileDownload(_req, res) {
+function handleLogFileDownload(_req, res, url) {
 	try {
 		const logFileId = url.searchParams.get("file") || undefined;
 		const logPath = resolveSquidLogPath(logFileId);
 		const file = getLogFile(logPath);
-		const body = JSON.stringify(file);
+		const body = JSON.stringify({
+			file: file
+		});
 
 		res.writeHead(200, { "Content-Type": "application/json" });
 		res.end(body);
