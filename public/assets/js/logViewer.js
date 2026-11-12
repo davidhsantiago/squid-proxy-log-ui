@@ -149,7 +149,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     async function downloadCurrentFile(lines) {
-        console.log(lines);
 
         const query = new URLSearchParams({
             file: String(selectedFileId)
@@ -233,9 +232,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
             renderRows();
             updatePager();
+
+            downloadButton.disabled = false;
         } catch (error) {
             viewerStatus.textContent = "Failed to load logs.";
             logsTableBody.innerHTML = `<tr><td colspan=\"3\">${error.message}</td></tr>`;
+            downloadButton.disabled = true;
         }
     }
 
@@ -257,6 +259,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 option.textContent = "No log files found";
                 logFileSelect.appendChild(option);
                 selectedFileId = "";
+                downloadButton.disabled = true;
                 return;
             }
 
@@ -276,6 +279,7 @@ document.addEventListener("DOMContentLoaded", () => {
             option.textContent = "Unable to load files";
             logFileSelect.appendChild(option);
             selectedFileId = "";
+            downloadButton.disabled = true;
             viewerStatus.textContent = `Failed to load log files: ${error.message}`;
         }
     }
