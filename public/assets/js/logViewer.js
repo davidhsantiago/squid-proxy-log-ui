@@ -302,16 +302,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     downloadButton.addEventListener("click", () => {
 
-        const lines = window.prompt("Please select the number of logs to save.\n(Blank for the whole file)", "all").trim();
+        try {
+            const lines = window.prompt("Please select the number of logs to save.\n(Blank for the whole file)", "all").trim();
 
-        if (lines == "all" || isNaN(lines))
-            downloadCurrentFile();
-        else {
-            if (lines > 0)
-                downloadCurrentFile(lines);
-            else
+            if (lines == "all" || isNaN(lines))
                 downloadCurrentFile();
-        }
+            else {
+                if (lines > 0)
+                    downloadCurrentFile(lines);
+                else
+                    downloadCurrentFile();
+            }
+        } catch {}
     });
 
     limitSelect.addEventListener("change", () => {
