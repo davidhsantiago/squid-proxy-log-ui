@@ -254,6 +254,18 @@ body {
     gap: 0.4rem;
 }
 
+#download-button.viewer-button {
+    background: #023830d6;
+    color: #f5fffc;
+    align-self: flex-end;
+    margin-left: auto;
+}
+
+#download-button.viewer-button:hover {
+    background: #0a3f35;
+    color: #e8fff8;
+}
+
 .viewer-button:hover,
 .viewer-button:focus-visible {
     background: #0a3f35;
@@ -381,5 +393,9 @@ body {
     .viewer-table th:nth-child(2),
     .viewer-table td:nth-child(2) {
         width: 5.4rem;
+    }
+
+    #download-button.viewer-button {
+        margin-left: 0px;
     }
 }

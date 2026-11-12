@@ -1,7 +1,7 @@
 "use strict";
 
 const { handleHealthRoute } = require("./health");
-const { handleLogFilesRoute, handleLogsRoute } = require("./logs");
+const { handleLogFilesRoute, handleLogsRoute, handleLogFileDownload } = require("./logs");
 const { handleSquidHttpTestRoute } = require("./squidhttptest");
 const { servePublicFile } = require("./static");
 
@@ -36,6 +36,11 @@ function routeRequest(req, res) {
 
 	if (method === "GET" && url.pathname === "/api/log-files") {
 		handleLogFilesRoute(req, res);
+		return;
+	}
+
+	if (method === "GET" && url.pathname === "/api/log-file") {
+		handleLogFileDownload(req, res, url);
 		return;
 	}
 
