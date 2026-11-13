@@ -64,6 +64,4 @@ if errorlevel 1 goto :error
 exit /b 0
 
 :error
-echo.
-echo Setup failed.
 exit /b 1

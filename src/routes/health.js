@@ -1,9 +1,18 @@
 "use strict";
 
 const { serviceStatus } = require("../services/systemd.service.js");
+const getConfig = require("../services/getConfig.service");
 
 function handleHealthRoute(_req, res) {
-	const statusCode = serviceStatus("squid.service");
+	const config = getConfig();
+
+	let statusCode;
+
+	if (config.isDocker === true) {
+		statusCode = serviceStatus("squid");
+	} else {
+		statusCode = serviceStatus("squid.service");
+	}
 
 	const body = JSON.stringify({
 		systemdStatusCode: statusCode,

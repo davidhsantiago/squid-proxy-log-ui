@@ -7,7 +7,7 @@ require('dotenv').config();
  */
 const getConfig = () => {
     return {
-        isDocker: process.env.IS_DOCKER || false,
+        isDocker: (Boolean)(process.env.IS_DOCKER) || false,
         port: process.env.PORT || 3000,
         host: process.env.HOST || '127.0.0.1',
         squidHost: process.env.SQUID_HOST,

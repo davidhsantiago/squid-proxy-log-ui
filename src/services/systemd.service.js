@@ -11,23 +11,15 @@ const getConfig = require("./getConfig.service");
 function serviceStatus(serviceName) {
     const config = getConfig();
 
-    if (config.isDocker) {
-        const squidPort = Number.parseInt(config.squidPort || "3128", 10);
-        const squidHost = config.squidHost || "127.0.0.1";
+    if (config.isDocker === true) {
+        const result = spawnSync("service", [serviceName, "status"], {
+            encoding: "utf-8"
+        });
 
-        const curlResult = spawnSync(
-            "curl",
-            ["-fsS", `http://${squidHost}:${squidPort}`, "-o", "/dev/null"],
-            { encoding: "utf-8" }
-        );
+        console.log(result);
 
-        if (curlResult.status === 0) {
-            return 0;
-        }
-
-        const psResult = spawnSync("ps", ["-C", "squid"], { encoding: "utf-8" });
-        if (psResult.status === 0) {
-            return 0;
+        if (typeof result.status === "number") {
+            return result.status;
         }
 
         return 1;
@@ -36,6 +28,8 @@ function serviceStatus(serviceName) {
     const result = spawnSync("systemctl", ["is-active", "--quiet", serviceName], {
         encoding: "utf-8"
     });
+
+    console.log(result);
 
     if (typeof result.status === "number") {
         return result.status;
