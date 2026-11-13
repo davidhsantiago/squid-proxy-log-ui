@@ -254,7 +254,7 @@ body {
     gap: 0.4rem;
 }
 
-#download-input {
+#line-quantity-prompt {
 
     display: none;
     flex-direction: row;
@@ -279,6 +279,10 @@ body {
         font-family: inherit;
         font-size: inherit;
 
+        &:focus {
+            outline: none;
+        }
+
         &::-webkit-outer-spin-button,
         &::-webkit-inner-spin-button {
             -webkit-appearance: none;
@@ -295,6 +299,11 @@ body {
         background: #023830d6;
         color: #f5fffc;
         border-radius: 0px 10px 10px 0px;
+
+        &:hover {
+            background: #0a3f35;
+            color: #e8fff8;
+        }
     }
 }
 
