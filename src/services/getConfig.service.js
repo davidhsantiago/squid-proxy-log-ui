@@ -1,3 +1,5 @@
+"use strict";
+
 require('dotenv').config();
 
 /**
@@ -5,7 +7,7 @@ require('dotenv').config();
  */
 const getConfig = () => {
     return {
-        isDocker: process.env.IS_DOCKER || false,
+        isDocker: ["1", "true", "yes", "on"].includes(String(process.env.IS_DOCKER).toLowerCase()),
         port: process.env.PORT || 3000,
         host: process.env.HOST || '127.0.0.1',
         squidHost: process.env.SQUID_HOST,
