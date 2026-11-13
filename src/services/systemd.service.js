@@ -16,8 +16,6 @@ function serviceStatus(serviceName) {
             encoding: "utf-8"
         });
 
-        console.log(result);
-
         if (typeof result.status === "number") {
             return result.status;
         }
@@ -28,8 +26,6 @@ function serviceStatus(serviceName) {
     const result = spawnSync("systemctl", ["is-active", "--quiet", serviceName], {
         encoding: "utf-8"
     });
-
-    console.log(result);
 
     if (typeof result.status === "number") {
         return result.status;
