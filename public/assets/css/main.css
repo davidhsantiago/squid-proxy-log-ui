@@ -254,6 +254,50 @@ body {
     gap: 0.4rem;
 }
 
+#download-input {
+
+    display: none;
+    flex-direction: row;
+    align-items: stretch;
+    border: 1px solid rgba(9, 62, 52, 0.25);
+    border-radius: 10px;
+    background: #f5fffc;
+    margin-left: auto;
+
+    >div {
+        height: inherit;
+        border-right: 1px solid rgba(9, 62, 52, 0.25);
+        padding: 0.48em 0.7em;
+
+    }
+
+    input {
+        border: none;
+        width: 80px;
+        background-color: transparent;
+        margin: 0px 5px 0px 5px;
+        font-family: inherit;
+        font-size: inherit;
+
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* Firefox */
+        &[type=number] {
+            -moz-appearance: textfield;
+        }
+    }
+
+    button {
+        background: #023830d6;
+        color: #f5fffc;
+        border-radius: 0px 10px 10px 0px;
+    }
+}
+
 #download-button.viewer-button {
     background: #023830d6;
     color: #f5fffc;
