@@ -8,6 +8,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const downloadButton = document.getElementById("download-button");
     const limitSelect = document.getElementById("limit-select");
     const logFileSelect = document.getElementById("log-file-select");
+    const lineQuantityPrompt = document.getElementById("line-quantity-prompt");
+    const lineQuantityInput = document.getElementById("line-quantity-input")
+    const confirmDownloadButton = document.getElementById("confirm-download-button");
 
     if (
         !logsTableBody ||
@@ -150,35 +153,44 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function downloadCurrentFile(lines) {
 
-        const query = new URLSearchParams({
-            file: String(selectedFileId)
-        });
+        try {
+            downloadButton.disabled = true;
 
-        const response = await fetch(`/api/log-file?${query.toString()}`);
-        const file = (await response.json()).file;
+            const query = new URLSearchParams({
+                file: String(selectedFileId)
+            });
 
-        const link = document.createElement("a");
+            const response = await fetch(`/api/log-file?${query.toString()}`);
+            const file = (await response.json()).file;
 
-        let content;
+            const link = document.createElement("a");
 
-        if (lines != null) {
-            if (lines > 0) {
-                content = trimLogs({quantity: lines, content: file.data});
+            let content;
+
+            if (lines != null) {
+                if (lines > 0) {
+                    content = trimLogs({quantity: lines, content: file.data});
+                } else {
+                    content = trimLogs({content: file.data});
+                }
             } else {
                 content = trimLogs({content: file.data});
             }
-        } else {
-            content = trimLogs({content: file.data});
+
+            const f = new Blob([content], { type: "text/plain" });
+
+            link.href = URL.createObjectURL(f);
+            link.download = file.name;
+
+            link.click();
+
+            URL.revokeObjectURL(link.href);
+
+            downloadButton.disabled = false;
+        } catch (error) {
+            alert(`The download was cancelled because of this error:\n${error.message}`);
+            downloadButton.disabled = false;
         }
-
-        const f = new Blob([content], { type: "text/plain" });
-
-        link.href = URL.createObjectURL(f);
-        link.download = file.name;
-
-        link.click();
-
-        URL.revokeObjectURL(link.href);
     }
 
     function trimLogs({quantity, content}) {
@@ -189,6 +201,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         return content.join("\n");
+    }
+
+    function showLinesInput() {
+        downloadButton.style.display = "none";
+        lineQuantityPrompt.style.display = "flex";
     }
 
     async function loadLogs() {
@@ -301,20 +318,24 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     downloadButton.addEventListener("click", () => {
-
-        try {
-            const lines = window.prompt("Please select the number of logs to save.\n(Blank for the whole file)", "all").trim();
-
-            if (lines == "all" || isNaN(lines))
-                downloadCurrentFile();
-            else {
-                if (lines > 0)
-                    downloadCurrentFile(lines);
-                else
-                    downloadCurrentFile();
-            }
-        } catch {}
+        showLinesInput();
     });
+
+    confirmDownloadButton.addEventListener("click", () => {
+        let lines = lineQuantityInput.value;
+
+        if(!lines)
+            lines = lineQuantityInput.placeholder;
+
+        if (lines > 0)
+            downloadCurrentFile(lines);
+        else
+            downloadCurrentFile();
+
+        lineQuantityInput.value = "";
+        lineQuantityPrompt.style.display = "none";
+        downloadButton.style.display = "block"
+    })
 
     limitSelect.addEventListener("change", () => {
         limit = Number.parseInt(limitSelect.value, 10) || 50;
