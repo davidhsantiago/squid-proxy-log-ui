@@ -8,6 +8,7 @@ function handleHealthRoute(_req, res) {
 
 	let statusCode;
 
+	// Determine the status code based on the environment (Docker (service) or systemd)
 	if (config.isDocker === true) {
 		statusCode = serviceStatus("squid");
 	} else {
