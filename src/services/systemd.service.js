@@ -13,10 +13,11 @@ function serviceStatus(serviceName) {
 
     if (config.isDocker) {
         const squidPort = Number.parseInt(config.squidPort || "3128", 10);
+        const squidHost = config.squidHost || "127.0.0.1";
 
         const curlResult = spawnSync(
             "curl",
-            ["-fsS", `http://${config.host}:${squidPort}`, "-o", "/dev/null"],
+            ["-fsS", `http://${squidHost}:${squidPort}`, "-o", "/dev/null"],
             { encoding: "utf-8" }
         );
 

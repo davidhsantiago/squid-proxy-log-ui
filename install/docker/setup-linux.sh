@@ -19,7 +19,7 @@ cp "$REPO_ROOT/package.json" "$REPO_ROOT/dist/package.json"
 cp -r "$REPO_ROOT/public" "$REPO_ROOT/dist/public"
 
 echo "Building and starting the Squid + log UI stack..."
-docker compose -f "$COMPOSE_FILE" up --build
+docker compose -f "$COMPOSE_FILE" up --build --force-recreate -d
 
 echo "Setup complete."
 echo "Web UI: http://localhost:3000"

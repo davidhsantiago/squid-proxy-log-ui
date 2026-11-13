@@ -15,6 +15,10 @@ services:
       SQUID_PORT: 3128
       SQUID_LOG_DIRS: /var/log/squid
       SQUID_LOG_FILE: /var/log/squid/access.log
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
     volumes:
       - squid-logs:/var/log/squid
     restart: unless-stopped
