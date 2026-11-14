@@ -24,7 +24,7 @@
     "clean:modules": "rm -rf node_modules",
     "clean": "npm run clean:dist && npm run clean:modules",
     "test": "node --test",
-    "fetchDependencies": "node ./scripts/extractModules.js",
+    "extractModules": "node ./scripts/extractModules.js",
     "assets:vendor": "node scripts/copyVendorAssets.js",
     "postinstall": "npm run assets:vendor",
     "prestart": "npm run assets:vendor",
