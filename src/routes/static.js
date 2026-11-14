@@ -6,6 +6,8 @@ const path = require("node:path");
 const PUBLIC_DIR = path.resolve(__dirname, "../../public");
 
 const CONTENT_TYPES = {
+	".woff": "font/woff",
+	".woff2": "font/woff2",
 	".css": "text/css; charset=utf-8",
 	".html": "text/html; charset=utf-8",
 	".js": "application/javascript; charset=utf-8",

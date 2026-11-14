@@ -1,0 +1,31 @@
+.module-entry {
+    border: 1px solid #ccc;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+}
+
+.module-entry h4 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    user-select: none;
+}
+
+.module-details {
+    display: none;
+    padding: 1rem;
+}
+
+#close-button {
+    background-color: #0b5f54;
+    border: 1px solid #0b5f54;
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    color: #fff;
+}
+
+#close-button:hover {
+    background-color: #0a4d46;
+}

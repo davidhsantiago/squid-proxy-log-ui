@@ -38,6 +38,7 @@ rm -rf "$DIST_DIR"
 mkdir -p "$DIST_DIR"
 
 cp -R "$REPO_ROOT/src" "$DIST_DIR/src"
+cp -R "$REPO_ROOT/scripts" "$DIST_DIR/scripts"
 cp "$REPO_ROOT/package.json" "$DIST_DIR/package.json"
 
 if [ -f "$REPO_ROOT/package-lock.json" ]; then
