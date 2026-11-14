@@ -1,0 +1,271 @@
+[
+  {
+    "agent-base": {
+      "version": "6.0.2",
+      "license": "MIT",
+      "description": "Turn a function into an `http.Agent` instance",
+      "homepage": "n/a",
+      "author": "Nathan Rajlich <nathan@tootallnate.net> (http://n8.io/)"
+    }
+  },
+  {
+    "asynckit": {
+      "version": "0.4.0",
+      "license": "MIT",
+      "description": "Minimal async jobs utility library, with streams support",
+      "homepage": "https://github.com/alexindigo/asynckit#readme",
+      "author": "Alex Indigo <iam@alexindigo.com>"
+    }
+  },
+  {
+    "axios": {
+      "version": "1.21.0",
+      "license": "MIT",
+      "description": "Promise based HTTP client for the browser and node.js",
+      "homepage": "https://axios-http.com",
+      "author": "Matt Zabriskie"
+    }
+  },
+  {
+    "call-bind-apply-helpers": {
+      "version": "1.0.2",
+      "license": "MIT",
+      "description": "Helper functions around Function call/apply/bind, for use in `call-bind`",
+      "homepage": "https://github.com/ljharb/call-bind-apply-helpers#readme",
+      "author": "Jordan Harband <ljharb@gmail.com>"
+    }
+  },
+  {
+    "combined-stream": {
+      "version": "1.0.8",
+      "license": "MIT",
+      "description": "A stream that emits multiple other streams one after another.",
+      "homepage": "https://github.com/felixge/node-combined-stream",
+      "author": "Felix Geisendörfer <felix@debuggable.com> (http://debuggable.com/)"
+    }
+  },
+  {
+    "debug": {
+      "version": "4.4.3",
+      "license": "MIT",
+      "description": "Lightweight debugging utility for Node.js and the browser",
+      "homepage": "n/a",
+      "author": "Josh Junon (https://github.com/qix-)"
+    }
+  },
+  {
+    "delayed-stream": {
+      "version": "1.0.0",
+      "license": "MIT",
+      "description": "Buffers events from a stream until you are ready to handle them.",
+      "homepage": "https://github.com/felixge/node-delayed-stream",
+      "author": "Felix Geisendörfer <felix@debuggable.com> (http://debuggable.com/)"
+    }
+  },
+  {
+    "dotenv": {
+      "version": "18.0.9",
+      "license": "BSD-2-Clause",
+      "description": "Loads environment variables from .env file",
+      "homepage": "https://github.com/motdotla/dotenv#readme",
+      "author": "n/a"
+    }
+  },
+  {
+    "dunder-proto": {
+      "version": "1.0.1",
+      "license": "MIT",
+      "description": "If available, the `Object.prototype.__proto__` accessor and mutator, call-bound",
+      "homepage": "https://github.com/es-shims/dunder-proto#readme",
+      "author": "Jordan Harband <ljharb@gmail.com>"
+    }
+  },
+  {
+    "es-define-property": {
+      "version": "1.0.1",
+      "license": "MIT",
+      "description": "`Object.defineProperty`, but not IE 8's broken one.",
+      "homepage": "https://github.com/ljharb/es-define-property#readme",
+      "author": "Jordan Harband <ljharb@gmail.com>"
+    }
+  },
+  {
+    "es-errors": {
+      "version": "1.3.0",
+      "license": "MIT",
+      "description": "A simple cache for a few of the JS Error constructors.",
+      "homepage": "https://github.com/ljharb/es-errors#readme",
+      "author": "Jordan Harband <ljharb@gmail.com>"
+    }
+  },
+  {
+    "es-object-atoms": {
+      "version": "1.1.2",
+      "license": "MIT",
+      "description": "ES Object-related atoms: Object, ToObject, RequireObjectCoercible",
+      "homepage": "https://github.com/ljharb/es-object-atoms#readme",
+      "author": "Jordan Harband <ljharb@gmail.com>"
+    }
+  },
+  {
+    "es-set-tostringtag": {
+      "version": "2.1.0",
+      "license": "MIT",
+      "description": "A helper to optimistically set Symbol.toStringTag, when possible.",
+      "homepage": "https://github.com/es-shims/es-set-tostringtag#readme",
+      "author": "Jordan Harband <ljharb@gmail.com>"
+    }
+  },
+  {
+    "follow-redirects": {
+      "version": "1.16.2",
+      "license": "MIT",
+      "description": "HTTP and HTTPS modules that follow redirects.",
+      "homepage": "https://github.com/follow-redirects/follow-redirects",
+      "author": "Ruben Verborgh <ruben@verborgh.org> (https://ruben.verborgh.org/)"
+    }
+  },
+  {
+    "form-data": {
+      "version": "4.0.6",
+      "license": "MIT",
+      "description": "A library to create readable \"multipart/form-data\" streams. Can be used to submit forms and file uploads to other web applications.",
+      "homepage": "n/a",
+      "author": "Felix Geisendörfer <felix@debuggable.com> (http://debuggable.com/)"
+    }
+  },
+  {
+    "function-bind": {
+      "version": "1.1.2",
+      "license": "MIT",
+      "description": "Implementation of Function.prototype.bind",
+      "homepage": "https://github.com/Raynos/function-bind",
+      "author": "Raynos <raynos2@gmail.com>"
+    }
+  },
+  {
+    "get-intrinsic": {
+      "version": "1.3.0",
+      "license": "MIT",
+      "description": "Get and robustly cache all JS language-level intrinsics at first require time",
+      "homepage": "https://github.com/ljharb/get-intrinsic#readme",
+      "author": "Jordan Harband <ljharb@gmail.com>"
+    }
+  },
+  {
+    "get-proto": {
+      "version": "1.0.1",
+      "license": "MIT",
+      "description": "Robustly get the [[Prototype]] of an object",
+      "homepage": "https://github.com/ljharb/get-proto#readme",
+      "author": "Jordan Harband <ljharb@gmail.com>"
+    }
+  },
+  {
+    "gopd": {
+      "version": "1.2.0",
+      "license": "MIT",
+      "description": "`Object.getOwnPropertyDescriptor`, but accounts for IE's broken implementation.",
+      "homepage": "https://github.com/ljharb/gopd#readme",
+      "author": "Jordan Harband <ljharb@gmail.com>"
+    }
+  },
+  {
+    "has-symbols": {
+      "version": "1.1.0",
+      "license": "MIT",
+      "description": "Determine if the JS environment has Symbol support. Supports spec, or shams.",
+      "homepage": "https://github.com/ljharb/has-symbols#readme",
+      "author": {
+        "name": "Jordan Harband",
+        "email": "ljharb@gmail.com",
+        "url": "http://ljharb.codes"
+      }
+    }
+  },
+  {
+    "has-tostringtag": {
+      "version": "1.0.2",
+      "license": "MIT",
+      "description": "Determine if the JS environment has `Symbol.toStringTag` support. Supports spec, or shams.",
+      "homepage": "https://github.com/inspect-js/has-tostringtag#readme",
+      "author": {
+        "name": "Jordan Harband",
+        "email": "ljharb@gmail.com",
+        "url": "http://ljharb.codes"
+      }
+    }
+  },
+  {
+    "hasown": {
+      "version": "2.0.4",
+      "license": "MIT",
+      "description": "A robust, ES3 compatible, \"has own property\" predicate.",
+      "homepage": "https://github.com/inspect-js/hasOwn#readme",
+      "author": "Jordan Harband <ljharb@gmail.com>"
+    }
+  },
+  {
+    "https-proxy-agent": {
+      "version": "5.0.1",
+      "license": "MIT",
+      "description": "An HTTP(s) proxy `http.Agent` implementation for HTTPS",
+      "homepage": "n/a",
+      "author": "Nathan Rajlich <nathan@tootallnate.net> (http://n8.io/)"
+    }
+  },
+  {
+    "math-intrinsics": {
+      "version": "1.1.0",
+      "license": "MIT",
+      "description": "ES Math-related intrinsics and helpers, robustly cached.",
+      "homepage": "https://github.com/es-shims/math-intrinsics#readme",
+      "author": "Jordan Harband <ljharb@gmail.com>"
+    }
+  },
+  {
+    "mime-db": {
+      "version": "1.52.0",
+      "license": "MIT",
+      "description": "Media Type Database",
+      "homepage": "n/a",
+      "author": "n/a"
+    }
+  },
+  {
+    "mime-types": {
+      "version": "2.1.35",
+      "license": "MIT",
+      "description": "The ultimate javascript content-type utility.",
+      "homepage": "n/a",
+      "author": "n/a"
+    }
+  },
+  {
+    "ms": {
+      "version": "2.1.3",
+      "license": "MIT",
+      "description": "Tiny millisecond conversion utility",
+      "homepage": "n/a",
+      "author": "n/a"
+    }
+  },
+  {
+    "proxy-from-env": {
+      "version": "2.1.0",
+      "license": "MIT",
+      "description": "Offers getProxyForUrl to get the proxy URL for a URL, respecting the *_PROXY (e.g. HTTP_PROXY) and NO_PROXY environment variables.",
+      "homepage": "https://github.com/Rob--W/proxy-from-env#readme",
+      "author": "Rob Wu <rob@robwu.nl> (https://robwu.nl/)"
+    }
+  },
+  {
+    "ws": {
+      "version": "8.22.0",
+      "license": "MIT",
+      "description": "Simple to use, blazing fast and thoroughly tested websocket client and server for Node.js",
+      "homepage": "https://github.com/websockets/ws",
+      "author": "Einar Otto Stangvik <einaros@gmail.com> (http://2x.io)"
+    }
+  }
+]
