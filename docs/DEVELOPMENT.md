@@ -28,6 +28,10 @@ From the project root:
 npm install
 ```
 
+The install step copies npm fonts and icons into `public/assets/vendor/`.
+The app serves these locally without CDN requests. To regenerate them manually,
+run `npm run assets:vendor`. Starting the app also regenerates these assets.
+
 ## 3) Configure the app
 
 Create a `.env` file in the project root, then set the environment values described in [docs/ENV.md](docs/ENV.md).

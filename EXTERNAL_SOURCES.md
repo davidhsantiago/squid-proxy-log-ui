@@ -21,32 +21,11 @@ These are declared in [package.json](package.json):
   - npm: https://www.npmjs.com/package/ws
   - License: MIT
 
-## 2) External assets loaded in the HTML pages
+## 2) Locally served browser assets
 
-These are referenced directly in the browser from the public HTML files:
-
-### Google Fonts
-
-- Source: https://fonts.googleapis.com
-- Source: https://fonts.gstatic.com
-- CSS URL: https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap
-- Fonts used:
-  - Space Grotesk
-  - IBM Plex Mono
-
-### Bootstrap Icons
-
-- CSS URL: https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css
-- Project: https://icons.getbootstrap.com/
-- License: MIT
-
-### GitHub project links
-
-- GitHub repository: https://github.com/davidh/squid-proxy-log-ui
-- This is not a library dependency, but it is an external link used in the UI.
-
-## 3) Notes
-
-- The project does not currently include Bootstrap CSS or Bootstrap JS directly.
-- The repository uses Bootstrap Icons, not the full Bootstrap framework.
-- The app also references local project files for styling and behavior, but the third-party sources above are the external ones currently in use.
+- `@fontsource/space-grotesk` and `@fontsource/ibm-plex-mono` provide fonts (OFL-1.1).
+- `bootstrap-icons` provides icon CSS and fonts (MIT).
+- `npm run assets:vendor` copies these packages into `public/assets/vendor/`.
+- Installation and npm start/dev regenerate these assets automatically.
+- All three HTML pages load these assets locally; no Google Fonts or CDN requests are needed.
+- GitHub and package homepage links remain external navigation links.

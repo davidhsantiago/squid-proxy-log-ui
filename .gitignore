@@ -148,5 +148,5 @@ vite.config.ts.timestamp-*
 # Turbo Repo
 .turbo
 
-# Modules JSON file
-modules.json
+# Generated from npm dependencies
+/public/assets/vendor/

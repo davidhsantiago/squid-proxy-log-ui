@@ -1,5 +1,23 @@
 [
   {
+    "@fontsource/ibm-plex-mono": {
+      "version": "5.3.0",
+      "license": "OFL-1.1",
+      "description": "Self-host the IBM Plex Mono font in a neatly bundled NPM package.",
+      "homepage": "https://fontsource.org/fonts/ibm-plex-mono",
+      "author": "Google Inc."
+    }
+  },
+  {
+    "@fontsource/space-grotesk": {
+      "version": "5.3.0",
+      "license": "OFL-1.1",
+      "description": "Self-host the Space Grotesk font in a neatly bundled NPM package.",
+      "homepage": "https://fontsource.org/fonts/space-grotesk",
+      "author": "Google Inc."
+    }
+  },
+  {
     "agent-base": {
       "version": "6.0.2",
       "license": "MIT",
@@ -24,6 +42,15 @@
       "description": "Promise based HTTP client for the browser and node.js",
       "homepage": "https://axios-http.com",
       "author": "Matt Zabriskie"
+    }
+  },
+  {
+    "bootstrap-icons": {
+      "version": "1.10.5",
+      "license": "MIT",
+      "description": "Official open source SVG icon library for Bootstrap",
+      "homepage": "https://icons.getbootstrap.com/",
+      "author": "mdo"
     }
   },
   {
