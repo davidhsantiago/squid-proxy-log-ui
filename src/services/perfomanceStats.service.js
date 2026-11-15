@@ -1,5 +1,7 @@
 "use strict";
 
+let isMonitoring = true;
+
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 const cpuStats = {
@@ -34,11 +36,20 @@ const systemInfo = {
 }
 
 async function startPerfomanceStats() {
-	while(true) {
+
+	isMonitoring = true;
+
+	while(isMonitoring) {
+
 		await delay(1000);
 	}
 }
 
+async function stopPerfomanceStats() {
+	isMonitoring = false;
+}
+
 module.exports = {
-	startPerfomanceStats
+	startPerfomanceStats,
+	stopPerfomanceStats
 };
