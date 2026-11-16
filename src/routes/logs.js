@@ -27,15 +27,15 @@ function toPositiveInt(value, fallback) {
  * @param {http.ServerResponse} res
  * @param {URL} url
  */
-function handleLogsRoute(_req, res, url) {
+async function handleLogsRoute(_req, res, url) {
 	const limit = toPositiveInt(url.searchParams.get("limit"), 100);
 	const page = toPositiveInt(url.searchParams.get("page"), 1);
 	const logFileId = url.searchParams.get("file") || undefined;
 
 	try {
-		const logPath = resolveSquidLogPath(logFileId);
-		const result = readLogPage(logPath, page, limit);
-		const availableFiles = listAvailableLogFiles();
+		const logPath = await resolveSquidLogPath(logFileId);
+		const result = await readLogPage(logPath, page, limit);
+		const availableFiles = await listAvailableLogFiles();
 		const activeFile = availableFiles.find((file) => file.path === logPath);
 
 		const body = JSON.stringify({
@@ -71,10 +71,10 @@ function handleLogsRoute(_req, res, url) {
  * @param {http.IncomingMessage} _req
  * @param {http.ServerResponse} res
  */
-function handleLogFilesRoute(_req, res) {
+async function handleLogFilesRoute(_req, res) {
 	try {
-		const availableFiles = listAvailableLogFiles();
-		const activePath = resolveSquidLogPath();
+		const availableFiles = await listAvailableLogFiles();
+		const activePath = await resolveSquidLogPath();
 		const activeFile = availableFiles.find((file) => file.path === activePath);
 
 		const body = JSON.stringify({
@@ -107,11 +107,11 @@ function handleLogFilesRoute(_req, res) {
  * @param {http.ServerResponse} res
  * @param {URL} url
  */
-function handleLogFileDownload(_req, res, url) {
+async function handleLogFileDownload(_req, res, url) {
 	try {
 		const logFileId = url.searchParams.get("file") || undefined;
-		const logPath = resolveSquidLogPath(logFileId);
-		const file = getLogFile(logPath);
+		const logPath = await resolveSquidLogPath(logFileId);
+		const file = await getLogFile(logPath);
 		const body = JSON.stringify({
 			file: file
 		});

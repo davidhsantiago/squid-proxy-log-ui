@@ -14,7 +14,12 @@ const getConfig = () => {
         squidPort: process.env.SQUID_PORT,
         squidLogPath: process.env.LOG_PATH,
         httpPort: process.env.PORT ?? '3000',
-        isDev: process.env.NODE_ENV === 'development'
+        isDev: process.env.NODE_ENV === 'development',
+        useSSH: ["1", "true", "yes", "on"].includes(String(process.env.USE_SSH).toLowerCase()),
+        sshHost: process.env.SSH_HOST,
+        sshPort: process.env.SSH_PORT || 22,
+        sshUser: process.env.SSH_USER,
+        sshPassword: process.env.SSH_PASSWORD ?? undefined,
     };
 };
 

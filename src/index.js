@@ -6,9 +6,16 @@ const http = require("http");
 const getConfig = require("./services/getConfig.service");
 const { routeRequest } = require("./routes");
 const { createWebSocket } = require("./services/websocket.service");
+const { connectSSH } = require("./services/sshHandler.service");
+
+if (getConfig().useSSH) {
+	connectSSH().catch((error) => {
+		console.error("Failed to connect to SSH server:", error.message);
+		process.exit(1);
+	});
+}
 
 const port = getConfig().httpPort;
-
 
 const server = http.createServer((req, res) => {
 	routeRequest(req, res);

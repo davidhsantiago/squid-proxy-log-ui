@@ -3,6 +3,10 @@
 const fs = require("node:fs");
 const path = require("node:path");
 const { execFileSync } = require("node:child_process");
+const getConfig = require("./getConfig.service");
+const { executeCommand } = require("./sshHandler.service");
+
+const config = getConfig();
 
 const DEFAULT_LOG_CANDIDATES = [
 	"/var/log/squid/access.log",
@@ -39,14 +43,40 @@ function buildLogFileId(directory, filename) {
 	return `${path.basename(directory)}/${filename}`;
 }
 
+function quoteShellArgument(value) {
+	return `'${String(value).replace(/'/g, `'\\''`)}'`;
+}
+
+async function readLogFileContent(filePath) {
+	if (config.useSSH) {
+		const result = await executeCommand(`cat -- ${quoteShellArgument(filePath)}`);
+		if (result.exitCode !== 0) {
+			const details = result.stderr.trim() || `remote command exited with code ${result.exitCode}`;
+			throw new Error(`Failed to read log file over SSH: ${details}`);
+		}
+
+		return result.stdout;
+	}
+
+	if (!fs.existsSync(filePath)) {
+		throw new Error(`File not found: ${filePath}`);
+	}
+
+	return fs.readFileSync(filePath, "utf-8");
+}
+
 /**
  * List all available Squid log files.
- * @returns {Array} An array of log file objects with id, label, path, size, and modifiedAt.
+ * @returns {Promise<Array>} A promise that resolves to log file objects with id, label, path, size, and modifiedAt.
  */
-function listAvailableLogFiles() {
+async function listAvailableLogFiles() {
 	const directories = [...listConfiguredDirectories(), ...DEFAULT_LOG_DIRECTORIES];
 	const uniquePaths = new Set();
 	const files = [];
+
+	if (config.useSSH) {
+		return listAvailableLogFilesSSH();
+	}
 
 	for (const directory of directories) {
 		if (!fs.existsSync(directory)) {
@@ -81,7 +111,7 @@ function listAvailableLogFiles() {
 		}
 	}
 
-	const configuredFile = process.env.SQUID_LOG_FILE;
+	const configuredFile = config.squidLogFile;
 	if (configuredFile && fs.existsSync(configuredFile) && !uniquePaths.has(configuredFile)) {
 		const stat = fs.statSync(configuredFile);
 		files.push({
@@ -98,13 +128,44 @@ function listAvailableLogFiles() {
 }
 
 /**
+ * List all available Squid log files over SSH.
+ * @returns {Promise<Array>} A promise that resolves to an array of log file objects with id, label, path, size, and modifiedAt.
+ */
+async function listAvailableLogFilesSSH() {
+	const result = await executeCommand(
+		`find ${DEFAULT_LOG_DIRECTORIES.join(" ")} -maxdepth 1 -type f -name '*.log' -printf '%p\\t%s\\t%TY-%Tm-%TdT%TH:%TM:%TS\\n' 2>/dev/null`
+	);
+	const lines = result.stdout.split(/\r?\n/).filter((line) => line.length > 0);
+
+	return lines
+		.map((line) => {
+			const [filePath, sizeText, modifiedAt] = line.split("\t");
+			if (!filePath || !sizeText || !modifiedAt) {
+				return null;
+			}
+
+			const size = Number.parseInt(sizeText, 10);
+			const fileName = path.basename(filePath);
+
+			return {
+				id: `ssh/${fileName}`,
+				label: `ssh/${fileName}`,
+				path: filePath,
+				size,
+				modifiedAt
+			};
+		})
+		.filter(Boolean);
+}
+
+/**
  * Resolve the full path of a Squid log file by its ID.
  * @param {string} logFileId - The ID of the log file.
- * @returns {string} The full path to the log file.
+ * @returns {Promise<string>} A promise that resolves to the full path to the log file.
  * @throws {Error} If the log file cannot be found.
  */
-function resolveSquidLogPath(logFileId) {
-	const availableFiles = listAvailableLogFiles();
+async function resolveSquidLogPath(logFileId) {
+	const availableFiles = await listAvailableLogFiles();
 
 	if (logFileId) {
 		const selected = availableFiles.find((file) => file.id === logFileId);
@@ -115,7 +176,7 @@ function resolveSquidLogPath(logFileId) {
 		return selected.path;
 	}
 
-	const configured = process.env.SQUID_LOG_FILE;
+	const configured = config.squidLogFile;
 	if (configured && fs.existsSync(configured)) {
 		return configured;
 	}
@@ -165,12 +226,8 @@ function readLogFile(directory, filename) {
  * @param {number} limit - The number of lines per page.
  * @returns {object} An object containing the log lines and pagination info.
  */
-function readLogPage(filePath, page = 1, limit = 100) {
-	if (!fs.existsSync(filePath)) {
-		throw new Error(`File not found: ${filePath}`);
-	}
-
-	const content = fs.readFileSync(filePath, "utf-8");
+async function readLogPage(filePath, page = 1, limit = 100) {
+	const content = await readLogFileContent(filePath);
 	const allLines = content.split(/\r?\n/).filter((line) => line.length > 0).reverse();
 	const total = allLines.length;
 
@@ -198,20 +255,15 @@ function readLogPage(filePath, page = 1, limit = 100) {
  * @param {string} filePath - The path to the log file.
  * @returns {object} An object containing the log lines and file info.
  */
-function getLogFile(filePath) {
-	if (!fs.existsSync(filePath)) {
-		throw new Error(`File not found: ${filePath}`);
-	}
-
-	const content = fs.readFileSync(filePath, "utf-8");
+async function getLogFile(filePath) {
+	const content = await readLogFileContent(filePath);
 	const lines = content.split(/\r?\n/).filter((line) => line.length > 0);
-	const path = filePath.split("/");
-	const name = path[path.length-1];
+	const name = path.basename(filePath);
 
 	return {
-		name: name,
+		name,
 		data: lines
-	}
+	};
 }
 
 /**
@@ -221,7 +273,35 @@ function getLogFile(filePath) {
  * @returns {string} The tailed log lines.
  */
 function tailLogFile(filePath, lines = 10) {
-	return execFileSync("tail", ["-n", String(lines), filePath], { encoding: "utf-8" });
+	const safeLines = Number.isInteger(lines) && lines > 0 ? lines : 10;
+	const safePath = String(filePath || "").trim();
+
+	if (!safePath) {
+		throw new Error("Log file path is required.");
+	}
+
+	if (config.useSSH) {
+		return executeCommand(`tail -n ${safeLines} ${quoteShellArgument(safePath)}`)
+			.then((result) => result.stdout)
+			.catch((error) => {
+				throw new Error(`Failed to tail log file over SSH: ${error.message}`);
+			});
+	}
+
+	if (!fs.existsSync(safePath)) {
+		throw new Error(`File not found: ${safePath}`);
+	}
+
+	try {
+		return execFileSync("tail", ["-n", String(safeLines), safePath], { encoding: "utf-8" });
+	} catch (error) {
+		const content = fs.readFileSync(safePath, "utf-8");
+		const sliced = content
+			.split(/\r?\n/)
+			.filter((line) => line.length > 0)
+			.slice(-safeLines);
+		return sliced.join("\n");
+	}
 }
 
 module.exports = {
