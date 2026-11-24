@@ -7,6 +7,7 @@ This project is intended for testing and verifying whether requests are flowing 
 
 - Docker installation guide: [docs/DOCKER.md](docs/DOCKER.md)
 - Linux installation guide: [docs/LINUX.md](docs/LINUX.md)
+- Proxmox VE LXC installation guide: [docs/PROXMOX.md](docs/PROXMOX.md)
 - Development setup: [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md)
 - File structure reference: [docs/FILE-STRUCTURE.md](docs/FILE-STRUCTURE.md)
 
